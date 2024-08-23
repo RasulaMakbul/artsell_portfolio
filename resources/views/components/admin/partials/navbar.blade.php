@@ -1,5 +1,5 @@
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">{{ __('Artsell') }}</a>
 
     <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
@@ -11,21 +11,15 @@
             </button>
         </li>
         <li class="nav-item text-nowrap">
-            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <svg class="bi">
-                    <use xlink:href="#list" />
-                </svg>
+            <button class="nav-link px-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
             </button>
         </li>
     </ul>
 
-    <div id="navbarSearch" class="navbar-search w-100 collapse">
-        <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-    </div>
-
-    <div class="nav-item dropdown">
+    <!-- User Dropdown - Now always visible -->
+    <div class="nav-item dropdown ms-auto">
         <button class="btn btn-dark dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             {{ Auth::user()->name }}
@@ -41,5 +35,4 @@
             </li>
         </ul>
     </div>
-
 </header>
