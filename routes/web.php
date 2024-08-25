@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/hero', HeroController::class);
+    Route::get('/hero/active/{id}', [HeroController::class, 'active'])->name('hero.active');
+    Route::get('/hero/inactive/{id}', [HeroController::class, 'inactive'])->name('hero.inactive');
 });
 
 require __DIR__.'/auth.php';

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Hero;
 use Illuminate\Http\Request;
-// use Intervention\Image\Laravel\Facades\Image;
 
 
 use Intervention\Image\ImageManager;
-// use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class HeroController extends Controller
 {
@@ -43,9 +45,8 @@ class HeroController extends Controller
                 'meta_keyword' => 'required|min:2|max:255',
                 'meta_description' => 'required|min:2|max:255',
             ]);
-            // dd($request->image);
             if ($request->file('image')) {
-                $fileName = $this->uploadImage($request->File('image'), $request->title);
+                $fileName = $this->uploadImage($request->File('image'),$request->title);
                 $requestData = [
                 'title' => $request->title,
                 'image' => $fileName,
@@ -87,32 +88,104 @@ class HeroController extends Controller
      */
     public function update(Request $request, Hero $hero)
     {
-        //
+        $request->validate([
+                'title' => 'required|min:2|max:255|unique:heroes,title',
+                'image' => 'nullable|mimes:png,jpg,jpeg',
+                'description' => 'nullable',
+                'status' => 'nullable',
+                'meta_title' => 'required',
+                'meta_keyword' => 'required|min:2|max:255',
+                'meta_description' => 'required|min:2|max:255',
+            ]);
+            $requestData = [
+                'title' => $request->title,
+                'image' => $fileName,
+                'description' => $request->description,
+                'status' => $request->status == true ? '1' : '0',
+                'meta_title' => $request->meta_title,
+                'meta_keyword' => $request->meta_keyword,
+                'meta_description' => $request->meta_description,
+            ];
+            if ($request->file('image')) {
+                if($hero->image){
+                    $filepath='public/'.$hero->image;
+                    if(Storage::exists($filePath)){
+                        $image = Image::make(Storage::path($filePath));
+                        $image->destroy();
+                        Storage::delete($filePath);
+                    }
+                }
+                $fileName = $this->uploadImage($request->File('image'),$request->title);
+                $requestData=['image'=>$fileName];
+
+
+            // dd($requestData);
+        }
+        $hero->update($requestData);
+        return redirect()->back()->with('success_message', $request->title . ' Hero created Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Hero $hero)
+    public function destroy($id)
     {
-        //
+         $hero = Hero::findOrFail($id);
+
+    if ($hero->image) {
+
+        $imagePath = 'public/' . $hero->image;
+
+        if (Storage::exists($imagePath)) {
+            $image->destroy();
+            Storage::delete($imagePath);
+        }
+    }
+
+    $hero->delete();
+
+    return redirect()->back()->with('success_message', 'Hero deleted successfully!');
     }
 
 
-    public function uploadImage($image, $name)
-{
-    $fileName = $name . date('Y-m-d') . time() . '.' . $image->getClientOriginalExtension();
+    public function uploadImage($image,$title)
+    {
+        $manager = new ImageManager(new Driver());
 
-    // Create an instance of ImageManager with a specific driver
-    $manager = new ImageManager('gd'); // or 'imagick' if you prefer
 
-    // Create an image instance and resize it
-    $manager->make($image->getRealPath())
-        ->resize(800, 600, function ($constraint) {
+        $fileName = $title.date('Y-m-d') . time() . '.' . $image->getClientOriginalExtension();
+
+
+        $savePath = storage_path('app/public/heroImg/' . $fileName);
+
+        // Read and process the image
+        $img=$manager->read($image);
+        $img->resize(800, 600, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save(storage_path('app/public/heroImg/' . $fileName));
+        })->save($savePath, 80);
 
-    return $fileName;
-}
+
+        $save_url = 'storage/heroImg/' . $fileName;
+        return $save_url;
+    }
+    public function active($id)
+    {
+        $hero = Hero::find($id);
+        $hero->status = 1;
+        $hero->update();
+        return back();
+    }
+    public function inactive($id)
+    {
+        $hero = Hero::find($id);
+        $hero->status = 0;
+        $hero->update();
+        return back();
+    }
+
+
+
+
+
 }
