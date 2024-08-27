@@ -5,6 +5,7 @@ use App\Http\Controllers\HeroController;
 use App\Http\Controllers\CreativityController;
 use App\Http\Controllers\FashionController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ArchitectureController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/product', ProductController::class);
     Route::get('/product/active/{id}', [ProductController::class, 'active'])->name('product.active');
     Route::get('/product/inactive/{id}', [ProductController::class, 'inactive'])->name('product.inactive');
+
+    Route::resource('/architecture', ArchitectureController::class);
+    Route::get('/architecture/active/{id}', [ArchitectureController::class, 'active'])->name('architecture.active');
+    Route::get('/architecture/inactive/{id}', [ArchitectureController::class, 'inactive'])->name('architecture.inactive');
 });
 
 require __DIR__.'/auth.php';
