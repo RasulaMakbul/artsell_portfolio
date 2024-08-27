@@ -58,8 +58,6 @@
                             @endif
                         </td>
                         <td>
-                            {{-- <a href="{{ route('hero.show', $hero->id) }}" class="btn btn-sm link-info"><i
-                                    class="fa-solid fa-eye fs-5"></i></a> --}}
                             <button type="button" class="btn btn-sm link-success" data-toggle="modal1"
                                 data-target="#showModal{{ $hero->id }}">
                                 <i class="fa-solid fa-eye fs-5"></i></i>
@@ -68,7 +66,6 @@
                                 data-target="#myModal{{ $hero->id }}">
                                 <i class="fa-solid fa-pen-to-square fs-5"></i>
                             </button>
-                            {{-- <a href="{{route('hero.edit',$hero->id)}}" class=" btn btn-sm link-warning" comment="Edit Subcategory">edit</a> --}}
                             <form action="{{ route('hero.destroy', $hero->id) }}" method="post"
                                 style="display:inline">
                                 @csrf
@@ -248,9 +245,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div> -->
                 </div>
             </div>
         </div>
@@ -312,8 +306,3 @@
 
 
 </x-admin.master>
-
-
-{{--
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia quis fugiat molestiae quae in quisquam dolorum tempora, repellat quod nisi est unde fugit repellendus, sequi commodi error sunt explicabo, quos at aliquam aliquid. Neque nostrum culpa ad perferendis deleniti qui unde, reprehenderit exercitationem nobis doloremque doloribus quis labore quam?
- --}}

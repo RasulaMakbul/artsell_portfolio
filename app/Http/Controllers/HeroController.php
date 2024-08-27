@@ -144,7 +144,7 @@ class HeroController extends Controller
     }
     $hero->delete();
 
-    return redirect()->route('hero.index')->with('success', 'Hero and associated image deleted successfully!');
+    return redirect()->back()->with('success', 'Hero and associated image deleted successfully!');
 }
 
 

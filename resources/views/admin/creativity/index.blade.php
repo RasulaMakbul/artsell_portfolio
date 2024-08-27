@@ -67,7 +67,6 @@
                                 data-target="#myModal{{ $creativity->id }}">
                                 <i class="fa-solid fa-pen-to-square fs-5"></i>
                             </button>
-                            {{-- <a href="{{route('creativity.edit',$creativity->id)}}" class=" btn btn-sm link-warning" comment="Edit Subcategory">edit</a> --}}
                             <form action="{{ route('creativity.destroy', $creativity->id) }}" method="post"
                                 style="display:inline">
                                 @csrf
@@ -247,9 +246,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div> -->
                 </div>
             </div>
         </div>
@@ -311,8 +307,3 @@
 
 
 </x-admin.master>
-
-
-{{--
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia quis fugiat molestiae quae in quisquam dolorum tempora, repellat quod nisi est unde fugit repellendus, sequi commodi error sunt explicabo, quos at aliquam aliquid. Neque nostrum culpa ad perferendis deleniti qui unde, reprehenderit exercitationem nobis doloremque doloribus quis labore quam?
- --}}

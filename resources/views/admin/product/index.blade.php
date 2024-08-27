@@ -245,9 +245,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div> -->
                 </div>
             </div>
         </div>
@@ -309,8 +306,3 @@
 
 
 </x-admin.master>
-
-
-{{--
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia quis fugiat molestiae quae in quisquam dolorum tempora, repellat quod nisi est unde fugit repellendus, sequi commodi error sunt explicabo, quos at aliquam aliquid. Neque nostrum culpa ad perferendis deleniti qui unde, reprehenderit exercitationem nobis doloremque doloribus quis labore quam?
- --}}

@@ -138,7 +138,7 @@ class CreativityController extends Controller
     }
     $creativity->delete();
 
-    return redirect()->route('creativity.index')->with('success', 'Creative Work and associated image deleted successfully!');
+    return redirect()->back()->with('success', 'Creative Work and associated image deleted successfully!');
     }
 
     public function uploadImage($image,$title)
