@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fashion;
+use App\Models\Product;
 use Illuminate\Http\Request;
-
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
 
-
-class FashionController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $fashions=Fashion::all();
-        return view('admin.fashion.index',compact('fashions'));
+        $products=Product::all();
+        return view('admin.product.index',compact('products'));
     }
 
     /**
@@ -36,7 +34,7 @@ class FashionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'title' => 'nullable|min:2|max:255|unique:fashions,title',
+                'title' => 'nullable|min:2|max:255|unique:products,title',
                 'image' => 'required|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
@@ -56,8 +54,8 @@ class FashionController extends Controller
                 'meta_description' => $request->meta_description,
             ];
 
-            Fashion::create($requestData);
-            return redirect()->back()->with('success_message', $request->title . ' Fashion created Successfully!');
+            Product::create($requestData);
+            return redirect()->back()->with('success_message', $request->title . ' Product created Successfully!');
         } else {
                 return redirect()->back()->with('message', $request->title . ' Image Missing!');
 
@@ -67,7 +65,7 @@ class FashionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Fashion $fashion)
+    public function show(Product $product)
     {
         //
     }
@@ -75,7 +73,7 @@ class FashionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fashion $fashion)
+    public function edit(Product $product)
     {
         //
     }
@@ -83,10 +81,10 @@ class FashionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Fashion $fashion)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
-                'title' => 'nullable|min:2|max:255|unique:fashions,title',
+                'title' => 'nullable|min:2|max:255|unique:products,title',
                 'image' => 'nullable|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
@@ -103,8 +101,8 @@ class FashionController extends Controller
                 'meta_description' => $request->meta_description,
             ];
             if ($request->file('image')) {
-                if($fashion->image){
-                    $relativePath = str_replace('storage/', '', $fashion->image);
+                if($product->image){
+                    $relativePath = str_replace('storage/', '', $product->image);
 
                     $imagePath = 'public/' . $relativePath;
 
@@ -118,29 +116,28 @@ class FashionController extends Controller
 
 
             }
-        $fashion->update($requestData);
-        return redirect()->back()->with('success_message', $request->title . ' Fashion Updated Successfully!');
+        $product->update($requestData);
+        return redirect()->back()->with('success_message', $request->title . ' Product Updated Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fashion $fashion)
+    public function destroy(Product $product)
     {
+            if ($product->image) {
+                $relativePath = str_replace('storage/', '', $product->image);
 
-        if ($fashion->image) {
-            $relativePath = str_replace('storage/', '', $fashion->image);
+                $imagePath = 'public/' . $relativePath;
+                var_dump($imagePath);
 
-            $imagePath = 'public/' . $relativePath;
-            var_dump($imagePath);
-
-            if (Storage::exists($imagePath)) {
-                Storage::delete($imagePath);
+                if (Storage::exists($imagePath)) {
+                    Storage::delete($imagePath);
+                }
             }
-        }
-        $fashion->delete();
+            $product->delete();
 
-        return redirect()->route('fashion.index')->with('success', 'Fashion and associated image deleted successfully!');
+            return redirect()->back()->with('success', 'Product and associated image deleted successfully!');
     }
 
     public function uploadImage($image,$title)
@@ -151,7 +148,7 @@ class FashionController extends Controller
         $fileName = $title.date('Y-m-d') . time() . '.' . $image->getClientOriginalExtension();
 
 
-        $savePath = storage_path('app/public/fashionImg/' . $fileName);
+        $savePath = storage_path('app/public/productImg/' . $fileName);
 
         $img=$manager->read($image);
         $img->resize(800, 600, function ($constraint) {
@@ -160,21 +157,21 @@ class FashionController extends Controller
         })->save($savePath, 80);
 
 
-        $save_url = 'storage/fashionImg/' . $fileName;
+        $save_url = 'storage/productImg/' . $fileName;
         return $save_url;
     }
     public function active($id)
     {
-        $fashion = Fashion::find($id);
-        $fashion->status = 1;
-        $fashion->update();
+        $product = Product::find($id);
+        $product->status = 1;
+        $product->update();
         return back();
     }
     public function inactive($id)
     {
-        $fashion = Fashion::find($id);
-        $fashion->status = 0;
-        $fashion->update();
+        $product = Product::find($id);
+        $product->status = 0;
+        $product->update();
         return back();
     }
 }
