@@ -57,7 +57,6 @@ class HeroController extends Controller
                 'meta_description' => $request->meta_description,
             ];
 
-            // dd($requestData);
             Hero::create($requestData);
             return redirect()->back()->with('success_message', $request->title . ' Hero created Successfully!');
         } else {
@@ -99,7 +98,6 @@ class HeroController extends Controller
             ]);
             $requestData = [
                 'title' => $request->title,
-                'image' => $fileName,
                 'description' => $request->description,
                 'status' => $request->status == true ? '1' : '0',
                 'meta_title' => $request->meta_title,
@@ -108,19 +106,20 @@ class HeroController extends Controller
             ];
             if ($request->file('image')) {
                 if($hero->image){
-                    $filepath='public/'.$hero->image;
-                    if(Storage::exists($filePath)){
-                        $image = Image::make(Storage::path($filePath));
-                        $image->destroy();
-                        Storage::delete($filePath);
+                    $relativePath = str_replace('storage/', '', $hero->image);
+
+                    $imagePath = 'public/' . $relativePath;
+                    var_dump($imagePath);
+
+                    if (Storage::exists($imagePath)) {
+                        Storage::delete($imagePath);
                     }
                 }
                 $fileName = $this->uploadImage($request->File('image'),$request->title);
-                $requestData=['image'=>$fileName];
+                $requestData['image']=$fileName;
 
 
-            // dd($requestData);
-        }
+            }
         $hero->update($requestData);
         return redirect()->back()->with('success_message', $request->title . ' Hero created Successfully!');
     }
@@ -128,24 +127,25 @@ class HeroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy($id)
-    {
-         $hero = Hero::findOrFail($id);
+{
+    $hero = Hero::findOrFail($id);
 
     if ($hero->image) {
+        $relativePath = str_replace('storage/', '', $hero->image);
 
-        $imagePath = 'public/' . $hero->image;
+        $imagePath = 'public/' . $relativePath;
+        var_dump($imagePath);
 
         if (Storage::exists($imagePath)) {
-            $image->destroy();
             Storage::delete($imagePath);
         }
     }
-
     $hero->delete();
 
-    return redirect()->back()->with('success_message', 'Hero deleted successfully!');
-    }
+    return redirect()->route('hero.index')->with('success', 'Hero and associated image deleted successfully!');
+}
 
 
     public function uploadImage($image,$title)
@@ -158,7 +158,6 @@ class HeroController extends Controller
 
         $savePath = storage_path('app/public/heroImg/' . $fileName);
 
-        // Read and process the image
         $img=$manager->read($image);
         $img->resize(800, 600, function ($constraint) {
             $constraint->aspectRatio();

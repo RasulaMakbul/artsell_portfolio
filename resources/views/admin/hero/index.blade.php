@@ -59,9 +59,13 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('hero.show', $hero->id) }}" class="btn btn-sm link-info"><i
-                                    class="fa-solid fa-eye fs-5"></i></a>
-                            <button type="button" class="btn btn-sm link-warning" data-toggle="modal1"
+                            {{-- <a href="{{ route('hero.show', $hero->id) }}" class="btn btn-sm link-info"><i
+                                    class="fa-solid fa-eye fs-5"></i></a> --}}
+                            <button type="button" class="btn btn-sm link-success" data-toggle="modal1"
+                                data-target="#showModal{{ $hero->id }}">
+                                <i class="fa-solid fa-eye fs-5"></i></i>
+                            </button>
+                            <button type="button" class="btn btn-sm link-warning" data-toggle="modal2"
                                 data-target="#myModal{{ $hero->id }}">
                                 <i class="fa-solid fa-pen-to-square fs-5"></i>
                             </button>
@@ -217,7 +221,7 @@
                             <div class="mb-3">
                                 <label for="meta_title" class="form-label">{{ __('Meta Title') }}</label>
                                 <input type="text" class="form-control" id="meta_title" name="meta_title"
-                                    value="{{ old('meta_title') }}">
+                                    value="{{ old('meta_title', $item->meta_title) }}">
                                 @error('meta_title')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
@@ -225,7 +229,7 @@
                             <div class="mb-3">
                                 <label for="meta_keyword" class="form-label">{{ __('Meta Keyword') }}</label>
                                 <input type="text" class="form-control" id="meta_keyword" name="meta_keyword"
-                                    value="{{ old('meta_keyword') }}">
+                                    value="{{ old('meta_keyword', $item->meta_keyword) }}">
                                 @error('meta_keyword')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
@@ -233,7 +237,8 @@
                             <div class="mb-3">
                                 <label for="meta_description" class="form-label">{{ __('Meta Description') }}</label>
                                 <input type="text" class="form-control" id="meta_description"
-                                    name="meta_description" value="{{ old('meta_description') }}">
+                                    name="meta_description"
+                                    value="{{ old('meta_description', $item->meta_description) }}">
                                 @error('meta_description')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
@@ -253,6 +258,36 @@
 
     @empty
     @endforelse
+    @forelse ($heros as $item)
+        <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="showModalLabel{{ $item->id }}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="showModalLabel{{ $item->id }}">
+                            {{ $item->title }}
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card" style="width: auto;">
+                            <img src="{{ asset($hero->image) }}" class="card-img-top" alt="{{ $item->name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->title }}</h5>
+                                <p class="card-text">{{ $item->description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @empty
+    @endforelse
     @push('js')
         <script>
             $(document).ready(function() {
@@ -263,6 +298,12 @@
             });
             $(document).ready(function() {
                 $('[data-toggle="modal1"]').click(function() {
+                    var targetModal = $(this).data('target');
+                    $(targetModal).modal('show');
+                });
+            });
+            $(document).ready(function() {
+                $('[data-toggle="modal2"]').click(function() {
                     var targetModal = $(this).data('target');
                     $(targetModal).modal('show');
                 });
