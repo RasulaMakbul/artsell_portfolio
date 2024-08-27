@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hero;
+use App\Models\Creativity;
 use Illuminate\Http\Request;
-
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
 
-
-
-class HeroController extends Controller
+class CreativityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $heros=Hero::all();
-        return view('admin.hero.index',compact('heros'));
+        $creativies=Creativity::all();
+        return view('admin.creativity.index',compact('creativies'));
     }
 
     /**
@@ -37,8 +34,8 @@ class HeroController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'title' => 'required|min:2|max:255|unique:heroes,title',
-                'image' => 'nullable|mimes:png,jpg,jpeg',
+                'title' => 'required|min:2|max:255|unique:creativities,title',
+                'image' => 'required|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
                 'meta_title' => 'required',
@@ -57,19 +54,18 @@ class HeroController extends Controller
                 'meta_description' => $request->meta_description,
             ];
 
-            Hero::create($requestData);
-            return redirect()->back()->with('success_message', $request->title . ' Hero created Successfully!');
+            Creativity::create($requestData);
+            return redirect()->back()->with('success_message', $request->title . ' Creative work Section created Successfully!');
         } else {
                 return redirect()->back()->with('message', $request->title . ' Image Missing!');
 
             }
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Hero $hero)
+    public function show(Creativity $creativity)
     {
         //
     }
@@ -77,7 +73,7 @@ class HeroController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Hero $hero)
+    public function edit(Creativity $creativity)
     {
         //
     }
@@ -85,11 +81,11 @@ class HeroController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Hero $hero)
+    public function update(Request $request, Creativity $creativity)
     {
         $request->validate([
-                'title' => 'required|min:2|max:255|unique:heroes,title',
-                'image' => 'nullable|mimes:png,jpg,jpeg',
+                'title' => 'required|min:2|max:255|unique:creativities,title',
+                'image' => 'required|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
                 'meta_title' => 'required',
@@ -105,8 +101,8 @@ class HeroController extends Controller
                 'meta_description' => $request->meta_description,
             ];
             if ($request->file('image')) {
-                if($hero->image){
-                    $relativePath = str_replace('storage/', '', $hero->image);
+                if($creativity->image){
+                    $relativePath = str_replace('storage/', '', $creativity->image);
 
                     $imagePath = 'public/' . $relativePath;
 
@@ -120,20 +116,19 @@ class HeroController extends Controller
 
 
             }
-        $hero->update($requestData);
-        return redirect()->back()->with('success_message', $request->title . ' Hero created Successfully!');
+        $creativity->update($requestData);
+        return redirect()->back()->with('success_message', $request->title . ' Creative Work Edited Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+    public function destroy(Creativity $creativity)
+    {
+        // $hero = Hero::findOrFail($id);
 
-    public function destroy($id)
-{
-    $hero = Hero::findOrFail($id);
-
-    if ($hero->image) {
-        $relativePath = str_replace('storage/', '', $hero->image);
+    if ($creativity->image) {
+        $relativePath = str_replace('storage/', '', $creativity->image);
 
         $imagePath = 'public/' . $relativePath;
         var_dump($imagePath);
@@ -142,11 +137,10 @@ class HeroController extends Controller
             Storage::delete($imagePath);
         }
     }
-    $hero->delete();
+    $creativity->delete();
 
-    return redirect()->route('hero.index')->with('success', 'Hero and associated image deleted successfully!');
-}
-
+    return redirect()->route('creativity.index')->with('success', 'Creative Work and associated image deleted successfully!');
+    }
 
     public function uploadImage($image,$title)
     {
@@ -156,7 +150,7 @@ class HeroController extends Controller
         $fileName = $title.date('Y-m-d') . time() . '.' . $image->getClientOriginalExtension();
 
 
-        $savePath = storage_path('app/public/heroImg/' . $fileName);
+        $savePath = storage_path('app/public/creativityImg/' . $fileName);
 
         $img=$manager->read($image);
         $img->resize(800, 600, function ($constraint) {
@@ -165,26 +159,21 @@ class HeroController extends Controller
         })->save($savePath, 80);
 
 
-        $save_url = 'storage/heroImg/' . $fileName;
+        $save_url = 'storage/creativityImg/' . $fileName;
         return $save_url;
     }
     public function active($id)
     {
-        $hero = Hero::find($id);
-        $hero->status = 1;
-        $hero->update();
+        $creativity = Creativity::find($id);
+        $creativity->status = 1;
+        $creativity->update();
         return back();
     }
     public function inactive($id)
     {
-        $hero = Hero::find($id);
-        $hero->status = 0;
-        $hero->update();
+        $creativity = Creativity::find($id);
+        $creativity->status = 0;
+        $creativity->update();
         return back();
     }
-
-
-
-
-
 }
