@@ -210,8 +210,7 @@
                                 <label for="image" class="form-label">{{ __('Image') }}</label>
                                 <input type="file" class="form-control" id="image" name="image"
                                     value="{{ old('image') }}">
-                                <img src="{{ asset($creativity->image) }}" alt="" width="100px"
-                                    height="100px">
+                                <img src="{{ asset($item->image) }}" alt="" width="100px" height="100px">
                                 @error('image')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
@@ -271,8 +270,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="card" style="width: auto;">
-                            <img src="{{ asset($creativity->image) }}" class="card-img-top"
-                                alt="{{ $item->name }}">
+                            <img src="{{ asset($item->image) }}" class="card-img-top" alt="{{ $item->name }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $item->title }}</h5>
                                 <p class="card-text">{{ $item->description }}</p>

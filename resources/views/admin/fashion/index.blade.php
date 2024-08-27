@@ -1,9 +1,9 @@
 <x-admin.master>
     <x-slot:title>
-        {{ __('Hero Section') }}
+        {{ __('Fashion Section') }}
     </x-slot:title>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Hero Section</h1>
+        <h1 class="h2">Fashion Section</h1>
         <p>This Part is for the banner of the home page</p>
 
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -11,7 +11,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                    data-target="#createHeroModal">
+                    data-target="#createFashionModal">
                     <span><i class="fa-solid fa-plus"></i></span>{{ __(' Create') }}
                 </button>
             </div>
@@ -41,36 +41,36 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($heros as $hero)
+                @forelse ($fashions as $fashion)
                     <tr class="align-middle">
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                            <img src="{{ asset($hero->image) }}" alt="hero image" class="img-fluid rounded"
+                            <img src="{{ asset($fashion->image) }}" alt="fashion image" class="img-fluid rounded"
                                 style="height: 100px; width: 100px;">
                         </td>
-                        <td>{{ $hero->title }}</td>
+                        <td>{{ $fashion->title }}</td>
                         <td>
-                            @if ($hero->status == 0)
-                                <a href="{{ route('hero.active', $hero->id) }}"
+                            @if ($fashion->status == 0)
+                                <a href="{{ route('fashion.active', $fashion->id) }}"
                                     class="btn btn-sm link-success">{{ __('Hidden') }}</a>
                             @else
-                                <a href="{{ route('hero.inactive', $hero->id) }}"
+                                <a href="{{ route('fashion.inactive', $fashion->id) }}"
                                     class="btn btn-sm link-danger">{{ __('Visible') }}</a>
                             @endif
                         </td>
                         <td>
-                            {{-- <a href="{{ route('hero.show', $hero->id) }}" class="btn btn-sm link-info"><i
+                            {{-- <a href="{{ route('fashion.show', $fashion->id) }}" class="btn btn-sm link-info"><i
                                     class="fa-solid fa-eye fs-5"></i></a> --}}
                             <button type="button" class="btn btn-sm link-success" data-toggle="modal1"
-                                data-target="#showModal{{ $hero->id }}">
+                                data-target="#showModal{{ $fashion->id }}">
                                 <i class="fa-solid fa-eye fs-5"></i></i>
                             </button>
                             <button type="button" class="btn btn-sm link-warning" data-toggle="modal2"
-                                data-target="#myModal{{ $hero->id }}">
+                                data-target="#myModal{{ $fashion->id }}">
                                 <i class="fa-solid fa-pen-to-square fs-5"></i>
                             </button>
-                            {{-- <a href="{{route('hero.edit',$hero->id)}}" class=" btn btn-sm link-warning" comment="Edit Subcategory">edit</a> --}}
-                            <form action="{{ route('hero.destroy', $hero->id) }}" method="post"
+                            {{-- <a href="{{route('fashion.edit',$fashion->id)}}" class=" btn btn-sm link-warning" comment="Edit Subcategory">edit</a> --}}
+                            <form action="{{ route('fashion.destroy', $fashion->id) }}" method="post"
                                 style="display:inline">
                                 @csrf
                                 @method('delete')
@@ -84,7 +84,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">No Hero added!</td>
+                        <td colspan="5">No fashion added!</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -92,17 +92,17 @@
     </div>
 
 
-    <div class="modal fade" id="createHeroModal" tabindex="-1" aria-labelledby="createHeroModalLabel"
+    <div class="modal fade" id="createFashionModal" tabindex="-1" aria-labelledby="createFashionModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title fs-5" id="createHeroModalLabel"><span><i
-                                class="fa-solid fa-plus"></i></span>{{ __(' Create New Hero') }}</h3>
+                    <h3 class="modal-title fs-5" id="createFashionModalLabel"><span><i
+                                class="fa-solid fa-plus"></i></span>{{ __(' Create New fashion') }}</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('hero.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('fashion.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -170,20 +170,20 @@
     </div>
 
 
-    @forelse ($heros as $item)
+    @forelse ($fashions as $item)
         <div class="modal fade" id="myModal{{ $item->id }}" tabindex="-1" role="dialog"
             aria-labelledby="myModalLabel{{ $item->id }}">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel{{ $item->id }}"> Update Hero
+                        <h4 class="modal-title" id="myModalLabel{{ $item->id }}"> Update fashion
                             {{ $item->title }}
                         </h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('hero.update', $item->id) }}" method="POST"
+                        <form action="{{ route('fashion.update', $item->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
@@ -212,7 +212,7 @@
                                 <label for="image" class="form-label">{{ __('Image') }}</label>
                                 <input type="file" class="form-control" id="image" name="image"
                                     value="{{ old('image') }}">
-                                <img src="{{ asset($hero->image) }}" alt="" width="100px" height="100px">
+                                <img src="{{ asset($item->image) }}" alt="" width="100px" height="100px">
                                 @error('image')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
@@ -258,7 +258,7 @@
 
     @empty
     @endforelse
-    @forelse ($heros as $item)
+    @forelse ($fashions as $item)
         <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1" role="dialog"
             aria-labelledby="showModalLabel{{ $item->id }}">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

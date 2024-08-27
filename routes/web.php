@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\CreativityController;
+use App\Http\Controllers\FashionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/creativity', CreativityController::class);
     Route::get('/creativity/active/{id}', [CreativityController::class, 'active'])->name('creativity.active');
     Route::get('/creativity/inactive/{id}', [CreativityController::class, 'inactive'])->name('creativity.inactive');
+    Route::resource('/fashion', FashionController::class);
+    Route::get('/fashion/active/{id}', [CreativityController::class, 'active'])->name('fashion.active');
+    Route::get('/fashion/inactive/{id}', [CreativityController::class, 'inactive'])->name('fashion.inactive');
 });
 
 require __DIR__.'/auth.php';

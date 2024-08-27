@@ -34,7 +34,7 @@ class CreativityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'title' => 'required|min:2|max:255|unique:creativities,title',
+                'title' => 'nullable|min:2|max:255|unique:creativities,title',
                 'image' => 'required|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
@@ -84,7 +84,7 @@ class CreativityController extends Controller
     public function update(Request $request, Creativity $creativity)
     {
         $request->validate([
-                'title' => 'required|min:2|max:255|unique:creativities,title',
+                'title' => 'nullable|min:2|max:255|unique:creativities,title',
                 'image' => 'required|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',
@@ -125,7 +125,6 @@ class CreativityController extends Controller
      */
     public function destroy(Creativity $creativity)
     {
-        // $hero = Hero::findOrFail($id);
 
     if ($creativity->image) {
         $relativePath = str_replace('storage/', '', $creativity->image);
