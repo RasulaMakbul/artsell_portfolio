@@ -12,9 +12,18 @@
 </head>
 
 <body>
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
+    <x-frontendComponent.partials.navbar />
+    {{ $slot }}
+
+
+
+
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu-content');
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>
