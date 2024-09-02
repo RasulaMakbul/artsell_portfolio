@@ -65,6 +65,9 @@
         </div>
     </div>
 </nav> --}}
+{{--
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia obcaecati repellat consectetur omnis asperiores laboriosam minus animi, et magni, quas aliquam ipsa iste eaque fugiat expedita consequuntur harum veniam natus optio culpa nihil! Aut vitae nulla, tempore quam impedit architecto aspernatur rerum maxime quod autem. Facilis quisquam itaque numquam eos!
+ --}}
 
 
 <nav class="bg-gradient-animated h-34">
@@ -75,7 +78,9 @@
             <div
                 class="flex items-center justify-center sm:items-stretch sm:justify-start hover:scale-150 transition-transform duration-300 ease-in-out animate-logo">
                 <div class="flex flex-shrink-0 items-center my-3 rounded-full shadow-lg shadow-white">
-                    <img class="h-[60px] w-auto" src="{{ asset('assets/images/artsell.png') }}" alt="Artsell">
+                    <a href="{{ url('/') }}">
+                        <img class="h-[60px] w-auto" src="{{ asset('assets/images/artsell.png') }}" alt="Artsell">
+                    </a>
                 </div>
             </div>
 
@@ -110,26 +115,26 @@
             <!-- Desktop Links -->
             <div id="desktop-menu" class="hidden lg:flex lg:justify-between py-2 space-x-8">
                 <a href="#"
-                    class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Home</a>
+                    class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Home</a>
                 <a href="#"
-                    class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">About</a>
+                    class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">About</a>
                 <a href="#"
-                    class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Services</a>
+                    class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Services</a>
                 <a href="#"
-                    class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Contact</a>
+                    class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Contact</a>
             </div>
 
             <!-- Mobile Menu Content -->
             <div id="mobile-menu-content" class="lg:hidden bg-gray-800 py-2 absolute inset-x-0 top-full hidden">
                 <div class="flex flex-col items-center space-y-4">
                     <a href="#"
-                        class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Home</a>
+                        class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Home</a>
                     <a href="#"
-                        class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">About</a>
+                        class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">About</a>
                     <a href="#"
-                        class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Services</a>
+                        class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Services</a>
                     <a href="#"
-                        class="text-white hover:underline text-lg font-bold hover:text-red-600 hover:scale-150 transition-transform duration-300 ease-in-out">Contact</a>
+                        class="text-white hover:underline text-lg font-bold hover:text-red-400 hover:scale-150 transition-transform duration-300 ease-in-out">Contact</a>
                 </div>
             </div>
         </div>

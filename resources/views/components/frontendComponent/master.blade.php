@@ -17,13 +17,14 @@
 
 
 
-
+    <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu-content');
             menu.classList.toggle('hidden');
         });
     </script>
+    @stack('js')
 </body>
 
 </html>
