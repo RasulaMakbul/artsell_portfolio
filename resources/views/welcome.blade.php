@@ -2,55 +2,53 @@
 
 
     {{-- hero Section start --}}
-    {{-- <div class="bg-white">
 
-
-        <div class="relative isolate px-6 pt-14 lg:px-8">
-            <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-                aria-hidden="true">
-                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-                    style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-                </div>
-            </div>
-            <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-                <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-                    <div
-                        class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                        Announcing our next round of funding. <a href="#"
-                            class="font-semibold text-indigo-600"><span class="absolute inset-0"
-                                aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online
-                        business</h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt.
-                        Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="#"
-                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
-                            started</a>
-                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span
-                                aria-hidden="true">→</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-                aria-hidden="true">
-                <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-                    style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <div class="container-fluid mb-5">
         <div class="col-lg-10">
             <div class="owl-carousel owl-theme">
-                @forelse ($heros as $item)
-                    <div class="item">
-                        <img class="w-full h-[410px] object-cover" src="{{ asset($item->image) }}" alt="Image" />
-                    </div>
+                @forelse ($heros as $index => $item)
+                    {{-- <div
+                        class="item flex flex-col lg:flex-row {{ $loop->even ? 'lg:flex-row-reverse' : '' }} items-center justify-between">
+                        <!-- Image -->
+                        <div class="w-full lg:w-1/2">
+                            <img class="w-full h-[500px] object-cover" src="{{ asset($item->image) }}" alt="Image" />
+                        </div>
+                        <!-- Title and Description -->
+                        <div class="w-full lg:w-1/2 p-6">
+                            <h2 class="text-4xl font-bold text-gray-600 mb-4">{{ $item->title }}</h2>
+                            <p class="text-lg text-gray-300">{{ $item->description }}</p>
+                        </div>
+                    </div> --}}
+                    @if ($loop->index % 2 == 0)
+                        <!-- Even Item: Image Left, Text Right -->
+                        <div class="grid grid-cols lg:grid-cols mb-10">
+                            <div class="flex flex-col lg:flex-row">
+                                <img class="w-full lg:w-1/2 h-[700px] object-cover" src="{{ asset($item->image) }}"
+                                    alt="Image">
+                                <div class="p-6 lg:w-1/2">
+                                    <h2 class="text-5xl font-bold mb-4  sm:text-lg">{{ $item->title }}</h2>
+                                    <hr class="my-5">
+                                    <p class="text-xl text-justify leading-relaxed sm:text-sm">{{ $item->description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Odd Item: Text Left, Image Right -->
+                        <div class="grid grid-cols lg:grid-cols mb-10">
+                            <div class="flex flex-col lg:flex-row-reverse">
+                                <img class="w-full lg:w-1/2 h-[700px] object-cover" src="{{ asset($item->image) }}"
+                                    alt="Image">
+                                <div class="p-6 lg:w-1/2">
+                                    <h2 class="text-5xl font-bold mb-4 text-right sm:text-lg">{{ $item->title }}</h2>
+                                    <hr class="my-5 gap-3 py-3">
+                                    <p class="text-xl text-justify leading-relaxed sm:text-sm">{{ $item->description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 @empty
                     <p>No items found.</p>
                 @endforelse
@@ -58,8 +56,22 @@
         </div>
     </div>
 
+    <div class="container-fluid mb-5">
+        <h3 class="text-4xl text-left mx-4">Creative work</h3>
+        @forelse ($creatives as $item)
+            <div
+                class="item flex flex-col lg:flex-row {{ $loop->even ? 'lg:flex-row-reverse' : '' }} items-center justify-between">
+
+                <div class="w-full lg:w-1/2">
+                    <img class="w-full h-[500px] object-cover" src="{{ asset($item->image) }}" alt="Image" />
+                </div>
+            </div>
+        @empty
+        @endforelse
+    </div>
+
     @push('js')
-        <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script> --}}
         <script>
             $(document).ready(function() {
                 $(".owl-carousel").owlCarousel({
@@ -69,6 +81,7 @@
                     autoplay: true,
                     autoplayTimeout: 2000,
                     autoplayHoverPause: true,
+                    dots: false,
                     responsive: {
                         0: {
                             items: 1,
@@ -88,3 +101,7 @@
 
     {{-- hero Section End --}}
 </x-frontendComponent.master>
+
+{{--
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio voluptas natus odit neque at saepe expedita facere? Ullam porro esse enim labore ab itaque dolor nulla sunt mollitia provident, accusantium quam ipsam doloremque ducimus, dolorem illum animi delectus cumque debitis. A voluptas distinctio beatae hic recusandae cupiditate veniam eum impedit?
+ --}}
