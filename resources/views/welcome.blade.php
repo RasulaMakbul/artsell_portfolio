@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="container-fluid mb-5">
+    {{-- <div class="container-fluid mb-5">
         <h3 class="text-4xl text-left mx-4">Creative work</h3>
         @forelse ($creatives as $item)
             <div
@@ -68,6 +68,32 @@
             </div>
         @empty
         @endforelse
+    </div> --}}
+
+    <div class="container-fluid mb-5">
+        <h3 class="text-4xl text-left mx-4 mb-5">Creative Work</h3>
+
+        <!-- Carousel for Animations -->
+        <div class="relative overflow-hidden">
+            @forelse ($creatives as $item)
+                <div
+                    class="item flex flex-col lg:flex-row {{ $loop->even ? 'lg:flex-row-reverse' : '' }} items-center justify-between animated-image">
+                    <!-- Image Container with Animation -->
+                    <div class="w-full lg:w-1/2 animated-container">
+                        <img class="w-full h-[500px] object-cover transition-transform" src="{{ asset($item->image) }}"
+                            alt="Image" />
+                    </div>
+
+                    <!-- Description, if needed -->
+                    <div class="lg:w-1/2 p-5 text-lg leading-relaxed">
+                        <h4 class="text-2xl mb-2">{{ $item->title }}</h4>
+                        <p class="text-justify">{{ $item->description }}</p>
+                    </div>
+                </div>
+            @empty
+                <p class="text-center text-lg">No items found.</p>
+            @endforelse
+        </div>
     </div>
 
     @push('js')
@@ -96,6 +122,33 @@
                 });
             });
         </script>
+    @endpush
+
+    @push('css')
+        <style>
+            /* Define the animation keyframes */
+            @keyframes slideIn {
+                0% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            /* Apply animation to the image container */
+            .animated-image {
+                animation: slideIn 1s ease-in-out;
+            }
+
+            /* Optional: Add transition effects for smoother appearance */
+            .animated-container img {
+                transition: transform 1s ease-in-out, opacity 0.8s ease-in-out;
+            }
+        </style>
     @endpush
 
 

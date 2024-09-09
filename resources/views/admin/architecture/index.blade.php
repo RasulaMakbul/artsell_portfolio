@@ -306,3 +306,8 @@
 
 
 </x-admin.master>
+
+
+{{--
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum fuga eveniet ipsum molestias doloremque quasi animi recusandae? Obcaecati deleniti voluptatem quia aut nesciunt et, impedit officia ut vero perspiciatis. Tempore reiciendis architecto est provident perferendis, quasi soluta. Est aliquid distinctio non eius, dolor, unde laboriosam aperiam ab incidunt nobis odit!
+ --}}
