@@ -88,7 +88,7 @@ class HeroController extends Controller
     public function update(Request $request, Hero $hero)
     {
         $request->validate([
-                'title' => 'nullable|min:2|max:255|unique:heroes,title',
+                'title' => 'nullable|min:2|max:255|unique:heroes,title'.$hero->id,
                 'image' => 'nullable|mimes:png,jpg,jpeg',
                 'description' => 'nullable',
                 'status' => 'nullable',

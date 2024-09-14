@@ -29,7 +29,7 @@
                                 <div class="p-6 lg:w-1/2">
                                     <h2 class="text-5xl font-bold mb-4  sm:text-lg">{{ $item->title }}</h2>
                                     <hr class="my-5">
-                                    <p class="text-xl text-justify leading-relaxed sm:text-sm">{{ $item->description }}
+                                    <p class="text-xl text-justify leading-justify sm:text-sm">{{ $item->description }}
                                     </p>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 <div class="p-6 lg:w-1/2">
                                     <h2 class="text-5xl font-bold mb-4 text-right sm:text-lg">{{ $item->title }}</h2>
                                     <hr class="my-5 gap-3 py-3">
-                                    <p class="text-xl text-justify leading-relaxed sm:text-sm">{{ $item->description }}
+                                    <p class="text-xl text-justify leading-justify sm:text-sm">{{ $item->description }}
                                     </p>
                                 </div>
                             </div>
