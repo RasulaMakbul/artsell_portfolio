@@ -14,5 +14,10 @@
         "postcss": "^8.4.41",
         "tailwindcss": "^3.4.10",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "aos": "^2.3.4",
+        "slick-carousel": "^1.8.1",
+        "swiper": "^11.1.14"
     }
 }
